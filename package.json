@@ -1,0 +1,38 @@
+{
+  "name": "crenvo",
+  "version": "1.0.1",
+  "description": "A Laravel-inspired, zero-dependency CLI and Library for env file encryption",
+  "keywords": [
+    "env",
+    "encrypt",
+    "crenv",
+    "crenvo"
+  ],
+  "homepage": "https://github.com/blackkat98/crenvo#readme",
+  "bugs": {
+    "url": "https://github.com/blackkat98/crenvo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blackkat98/crenvo.git"
+  },
+  "license": "ISC",
+  "author": "blackkat98",
+  "type": "module",
+  "main": "./lib/index.js",
+  "module": "./lib/index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "require": "./lib/index.js",
+      "import": "./lib/index.js"
+    }
+  },
+  "bin": {
+    "crenv": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
