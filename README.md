@@ -1,60 +1,59 @@
 # crenvo
-A Laravel-inspired, zero-dependency, TypeScript-ready CLI and Library for env file encryption
 
-```crenvo = crypto + env```
+A Laravel-inspired, zero-dependency, TypeScript-ready CLI and library for env file encryption.
 
-## 1. The idea
+`crenvo = crypto + env`
 
-```artisan``` provides ```php artisan key:generate``` to support env variable encryption.
+---
 
-NodeJS provides a ton of tools to perform encryption and file manipulation without the need of extra libraries.
+## 1. Introduction
 
-With those 2 thoughts in mind, I created this package to deal with a task many may have to deal with.
+Inspired by Laravel's `php artisan key:generate`, **crenvo** brings secure environment variable encryption to the Node.js ecosystem. By utilizing native Node.js crypto capabilities, this package allows you to manage sensitive secrets without external dependencies.
 
-## 2. CLI commands
+---
 
-### ```npx crenv code:generate --envFile <path>```
+## 2. CLI Commands
 
-Run this command to create a ```ENC_CODE``` in your env file.
+### `npx crenv code:generate --envFile <path>`
+Run this command to create an `ENC_CODE` in your env file.
+* **--envFile / -e**: Specify file path (Default: `.env` in project root).
 
-Use ```--envFile```/```-e``` option to specify your file path. By default, it is ```.env``` in the project root directory.
+### `npx crenv encrypt <input> --envFile <path> --writeAs <field>`
+Encrypt a string value using the code in the env file.
+* **--envFile / -e**: Specify file path.
+* **--writeAs / -w**: Write the result into the env file under the given variable name.
 
-### ```npx crenv encrypt <input> --envFile <path> --writeAs <field>```
+### `npx crenv decrypt <input> --envFile <path>`
+Decrypt a string value using the code in the env file.
+* **--envFile / -e**: Specify file path.
 
-Run this command to encrypt a string value using the code in env the file and print out the result.
+---
 
-Use ```--envFile```/```-e``` option to specify your file path. By default, it is ```.env``` in the project root directory.
+## 3. Utility Functions
 
-Use ```--writeAs```/```-w``` option to write the encrypted into the env file under the given variable name.
+| Function | Signature | Description |
+| :--- | :--- | :--- |
+| `setCode` | `(envFile?: string) => void` | Create an `ENC_CODE` in your env file. |
+| `getCode` | `(envFile?: string) => Promise<string>` | Retrieve the value of `ENC_CODE`. |
+| `getKeyIv` | `(envFile?: string) => Promise<string[]>` | Retrieve the Encryption KEY and IV. |
+| `encrypt` | `(str: string, envFile?: string) => Promise<string>` | Encrypt a string value. |
+| `encryptAndSet` | `(str: string, field: string, envFile?: string) => Promise<string>` | Encrypt and write to a specific field. |
+| `decrypt` | `(str: string, envFile?: string) => Promise<string>` | Decrypt a string value. |
 
-### ```npx crenv decrypt <input> --envFile <path>```
+### Code Implementation Example
 
-Run this command to decrypt a string value using the code in env the file and print out the result.
+```typescript
+import { encrypt, decrypt, setCode } from 'crenvo';
 
-Use ```--envFile```/```-e``` option to specify your file path. By default, it is ```.env``` in the project root directory.
+async function example() {
+  // Initialize key if not present
+  await setCode('.env');
 
-## 3. Utility functions
+  // Encrypt a value
+  const encrypted = await encrypt("my_secret_key");
+  console.log(`Encrypted: ${encrypted}`);
 
-### ```setCode(envFile?: string = '.env') => void```
-
-Create a ```ENC_CODE``` in your env file.
-
-### ```getCode(envFile?: string = '.env') => Promise<string>```
-
-Retrieve the value of ```ENC_CODE``` in your env file.
-
-### ```getKeyIv(envFile?: string = '.env') => Promise<string[]>```
-
-Retrieve the Encryption KEY and IV from decrypting the value of ```ENC_CODE``` in your env file.
-
-### ```encrypt(str: string, envFile?: string = '.env') => Promise<string>```
-
-Encrypt a string value using the code in env the file.
-
-### ```encryptAndSet(str: string, field: string, envFile?: string = '.env') => Promise<string>```
-
-Encrypt a string value using the code in env the file and write it under the name specified by ```field```.
-
-### ```decrypt(str: string, envFile?: string = '.env') => Promise<string>```
-
-Decrypt a string value using the code in env the file.
+  // Decrypt the value
+  const original = await decrypt(encrypted);
+  console.log(`Original: ${original}`);
+}
