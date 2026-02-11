@@ -1,6 +1,6 @@
 {
   "name": "crenvo",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A Laravel-inspired, zero-dependency CLI and Library for env file encryption",
   "keywords": [
     "env",
@@ -31,8 +31,5 @@
   },
   "bin": {
     "crenvo": "./bin/cli.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
