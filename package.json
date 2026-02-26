@@ -1,6 +1,6 @@
 {
   "name": "crenvo",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "A Laravel-inspired, zero-dependency CLI and Library for env file encryption",
   "keywords": [
     "env",
@@ -22,6 +22,9 @@
   "main": "./lib/index.js",
   "module": "./lib/index.js",
   "types": "./index.d.ts",
+  "files": [
+    "lib"
+  ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
